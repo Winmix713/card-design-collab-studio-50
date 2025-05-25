@@ -1,10 +1,11 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Palette, Circle, Square } from 'lucide-react';
+import { Circle, Square } from 'lucide-react';
+import { CardAttributes } from './hooks/useCardAttributes';
 
 interface StyleControlsProps {
-  cardAttributes: any;
+  cardAttributes: CardAttributes;
   updateAttribute: (key: string, value: any) => void;
 }
 

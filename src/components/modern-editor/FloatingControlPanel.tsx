@@ -2,6 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
+import { CardAttributes } from './hooks/useCardAttributes';
 import { VisualGradientBuilder } from './VisualGradientBuilder';
 import { Shadow3DController } from './Shadow3DController';
 import { SmartPresetGallery } from './SmartPresetGallery';
@@ -9,7 +10,7 @@ import { StyleControls } from './StyleControls';
 
 interface FloatingControlPanelProps {
   activePanel: string;
-  cardAttributes: any;
+  cardAttributes: CardAttributes;
   updateAttribute: (key: string, value: any) => void;
   updateShadow: (shadowType: string, key: string, value: any) => void;
   onClose: () => void;

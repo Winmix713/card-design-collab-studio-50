@@ -2,9 +2,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff } from 'lucide-react';
+import { CardAttributes } from './hooks/useCardAttributes';
 
 interface Shadow3DControllerProps {
-  cardAttributes: any;
+  cardAttributes: CardAttributes;
   updateShadow: (shadowType: string, key: string, value: any) => void;
 }
 
@@ -20,7 +21,7 @@ export const Shadow3DController: React.FC<Shadow3DControllerProps> = ({
   return (
     <div className="space-y-8">
       {shadowTypes.map((shadowType) => {
-        const shadow = cardAttributes[shadowType.key];
+        const shadow = cardAttributes[shadowType.key as keyof CardAttributes] as any;
         return (
           <div key={shadowType.key} className="space-y-4">
             <div className="flex items-center justify-between">

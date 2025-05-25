@@ -1,10 +1,11 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { X, Shuffle, Copy } from 'lucide-react';
+import { X, Shuffle } from 'lucide-react';
+import { CardAttributes } from './hooks/useCardAttributes';
 
 interface LiveStyleMixerProps {
-  cardAttributes: any;
+  cardAttributes: CardAttributes;
   updateAttribute: (key: string, value: any) => void;
   onClose: () => void;
 }

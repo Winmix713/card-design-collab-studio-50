@@ -1,10 +1,11 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { RotateCw, Palette } from 'lucide-react';
+import { RotateCw } from 'lucide-react';
+import { CardAttributes } from './hooks/useCardAttributes';
 
 interface VisualGradientBuilderProps {
-  cardAttributes: any;
+  cardAttributes: CardAttributes;
   updateAttribute: (key: string, value: any) => void;
 }
 
@@ -125,7 +126,6 @@ export const VisualGradientBuilder: React.FC<VisualGradientBuilderProps> = ({
               drag
               dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
               onDrag={(_, info) => {
-                const rect = (info.point.x - 48) / 48;
                 const angle = Math.atan2(info.point.y - 48, info.point.x - 48) * (180 / Math.PI) + 90;
                 handleAngleChange(Math.round(angle));
               }}

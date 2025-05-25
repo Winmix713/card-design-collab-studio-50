@@ -2,9 +2,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, Heart, Zap, Waves } from 'lucide-react';
+import { CardAttributes } from './hooks/useCardAttributes';
 
 interface SmartPresetGalleryProps {
-  cardAttributes: any;
+  cardAttributes: CardAttributes;
   updateAttribute: (key: string, value: any) => void;
 }
 
