@@ -6,7 +6,7 @@ import { CardAttributes } from './hooks/useCardAttributes';
 
 interface StyleControlsProps {
   cardAttributes: CardAttributes;
-  updateAttribute: (key: string, value: any) => void;
+  updateAttribute: (key: keyof CardAttributes, value: any) => void;
 }
 
 export const StyleControls: React.FC<StyleControlsProps> = ({
@@ -16,7 +16,7 @@ export const StyleControls: React.FC<StyleControlsProps> = ({
   const backgroundTypes = [
     { id: 'solid', label: 'Solid', icon: Circle },
     { id: 'gradient', label: 'Gradient', icon: Square }
-  ];
+  ] as const;
 
   return (
     <div className="space-y-6">
