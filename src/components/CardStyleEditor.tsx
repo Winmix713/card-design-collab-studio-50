@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, Plus, Save, Undo, Redo, Trash2, RotateCcw, Download, Copy, Check, Wand2, Grid, Search, X, Tag, Cube, Calendar, Trophy, ThumbsUp, Send, Users, Flag, MessageSquare, Lock, Unlock, UserPlus, Settings, GitFork, Heart } from 'lucide-react';
+import { ChevronDown, Plus, Save, Undo, Redo, Trash2, RotateCcw, Download, Copy, Check, Wand2, Grid, Search, X, Tag, Box, Calendar, Trophy, ThumbsUp, Send, Users, Flag, MessageSquare, Lock, Unlock, UserPlus, Settings, GitFork, Heart } from 'lucide-react';
 
 const CardStyleEditor = () => {
   const [cardAttributes, setCardAttributes] = useState({
@@ -116,7 +115,7 @@ const CardStyleEditor = () => {
                 <nav className="flex">
                   {[
                     { id: 'background', label: 'Background', icon: Grid },
-                    { id: 'border', label: 'Border', icon: Cube },
+                    { id: 'border', label: 'Border', icon: Box },
                     { id: 'shadow', label: 'Shadow', icon: Calendar },
                     { id: 'size', label: 'Size', icon: Trophy }
                   ].map(tab => {
