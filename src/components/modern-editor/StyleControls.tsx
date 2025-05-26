@@ -66,7 +66,7 @@ export const StyleControls: React.FC<StyleControlsProps> = ({
           <div className="flex items-center space-x-4">
             <div className="relative">
               <div
-                className="w-16 h-16 rounded-2xl border-2 border-white/20 cursor-pointer relative overflow-hidden shadow-lg"
+                className="w-16 h-16 rounded-2xl border-2 border-white/20 cursor-pointer relative overflow-hidden shadow-lg slider-thumb"
                 style={{ backgroundColor: cardAttributes.backgroundColor }}
               >
                 <input
@@ -95,25 +95,6 @@ export const StyleControls: React.FC<StyleControlsProps> = ({
                   onChange={(e) => updateAttribute('backgroundOpacity', parseInt(e.target.value))}
                   className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer slider"
                 />
-                <style jsx>{`
-                  .slider::-webkit-slider-thumb {
-                    appearance: none;
-                    width: 18px;
-                    height: 18px;
-                    border-radius: 50%;
-                    background: linear-gradient(135deg, #8b5cf6, #a855f7);
-                    cursor: pointer;
-                    box-shadow: 0 2px 6px rgba(139, 92, 246, 0.3);
-                  }
-                  .slider::-moz-range-thumb {
-                    width: 18px;
-                    height: 18px;
-                    border-radius: 50%;
-                    background: linear-gradient(135deg, #8b5cf6, #a855f7);
-                    cursor: pointer;
-                    border: none;
-                  }
-                `}</style>
               </div>
             </div>
           </div>
@@ -218,6 +199,35 @@ export const StyleControls: React.FC<StyleControlsProps> = ({
           </div>
         </div>
       </ControlCard>
+
+      <style>{`
+        .slider::-webkit-slider-thumb {
+          appearance: none;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #8b5cf6, #a855f7);
+          cursor: pointer;
+          box-shadow: 0 2px 6px rgba(139, 92, 246, 0.3);
+        }
+        .slider::-moz-range-thumb {
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #8b5cf6, #a855f7);
+          cursor: pointer;
+          border: none;
+        }
+        .slider-thumb::-webkit-slider-thumb {
+          appearance: none;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #8b5cf6, #a855f7);
+          cursor: pointer;
+          box-shadow: 0 2px 6px rgba(139, 92, 246, 0.3);
+        }
+      `}</style>
     </div>
   );
 };

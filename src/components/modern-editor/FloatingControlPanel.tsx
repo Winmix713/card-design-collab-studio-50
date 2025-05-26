@@ -163,7 +163,10 @@ export const FloatingControlPanel: React.FC<FloatingControlPanelProps> = ({
         </div>
         
         {/* Content Area with Better Spacing */}
-        <div className="p-6 overflow-y-auto max-h-[calc(85vh-140px)] custom-scrollbar">
+        <div className="p-6 overflow-y-auto max-h-[calc(85vh-140px)]" style={{
+          scrollbarWidth: 'thin',
+          scrollbarColor: 'rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1)'
+        }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -178,7 +181,7 @@ export const FloatingControlPanel: React.FC<FloatingControlPanelProps> = ({
         <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
       </motion.div>
 
-      <style jsx>{`
+      <style>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 6px;
         }
