@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Settings, Palette, Layers, Box, Undo, Redo, RotateCcw } from 'lucide-react';
+import { Settings, Palette, Layers, Box, Undo, Redo, RotateCcw, Grid, Shuffle, Download } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../ui/tooltip';
 
 interface FloatingPanelButtonsProps {
@@ -14,6 +14,9 @@ interface FloatingPanelButtonsProps {
   clearHistory?: () => void;
   historySize?: { past: number; future: number; total: number };
   lastAction?: string | null;
+  onTemplateGallery?: () => void;
+  onRandomize?: () => void;
+  onExport?: () => void;
 }
 
 export const FloatingPanelButtons: React.FC<FloatingPanelButtonsProps> = ({
@@ -25,13 +28,22 @@ export const FloatingPanelButtons: React.FC<FloatingPanelButtonsProps> = ({
   canRedo = false,
   clearHistory,
   historySize,
-  lastAction
+  lastAction,
+  onTemplateGallery,
+  onRandomize,
+  onExport
 }) => {
   const floatingPanels = [
     { id: 'style', icon: Palette, label: 'Style', position: { top: '10%', left: '2%' } },
-    { id: 'gradient', icon: Layers, label: 'Gradient', position: { top: '30%', left: '2%' } },
-    { id: 'shadow', icon: Box, label: '3D Shadow', position: { top: '50%', left: '2%' } },
-    { id: 'presets', icon: Settings, label: 'Presets', position: { top: '70%', left: '2%' } }
+    { id: 'gradient', icon: Layers, label: 'Gradient', position: { top: '25%', left: '2%' } },
+    { id: 'shadow', icon: Box, label: '3D Shadow', position: { top: '40%', left: '2%' } },
+    { id: 'presets', icon: Settings, label: 'Presets', position: { top: '55%', left: '2%' } }
+  ];
+
+  const quickActions = [
+    { id: 'templates', icon: Grid, label: 'Templates', action: onTemplateGallery, shortcut: 'Ctrl+T' },
+    { id: 'randomize', icon: Shuffle, label: 'Randomize', action: onRandomize, shortcut: 'Ctrl+R' },
+    { id: 'export', icon: Download, label: 'Export', action: onExport, shortcut: 'Ctrl+S' }
   ];
 
   // Enhanced keyboard shortcuts with error handling
@@ -150,6 +162,33 @@ export const FloatingPanelButtons: React.FC<FloatingPanelButtonsProps> = ({
               )}
             </div>
           )}
+        </div>
+      </motion.div>
+
+      {/* Quick Actions */}
+      <motion.div
+        className="fixed z-20"
+        style={{ top: '2%', right: '2%' }}
+        whileHover={{ scale: 1.02 }}
+      >
+        <div className="flex space-x-2">
+          {quickActions.map((action) => (
+            <Tooltip key={action.id}>
+              <TooltipTrigger asChild>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={action.action}
+                  className="p-3 rounded-xl backdrop-blur-md transition-all duration-300 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-white/20 hover:from-purple-500/30 hover:to-pink-500/30 text-white"
+                >
+                  <action.icon className="w-5 h-5" />
+                </motion.button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{action.label} ({action.shortcut})</p>
+              </TooltipContent>
+            </Tooltip>
+          ))}
         </div>
       </motion.div>
 

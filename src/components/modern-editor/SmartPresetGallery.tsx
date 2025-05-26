@@ -1,8 +1,9 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Heart, Zap, Waves } from 'lucide-react';
+import { Sparkles, Heart, Zap, Waves, Grid, Shuffle } from 'lucide-react';
 import { CardAttributes } from './hooks/useCardAttributes';
+import { generateRandomCard } from './utils/cardUtils';
 
 interface SmartPresetGalleryProps {
   cardAttributes: CardAttributes;
@@ -79,6 +80,13 @@ export const SmartPresetGallery: React.FC<SmartPresetGalleryProps> = ({
     });
   };
 
+  const handleRandomize = () => {
+    const randomData = generateRandomCard();
+    Object.keys(randomData).forEach(key => {
+      updateAttribute(key, randomData[key as keyof typeof randomData]);
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -127,6 +135,22 @@ export const SmartPresetGallery: React.FC<SmartPresetGalleryProps> = ({
               </motion.div>
             );
           })}
+        </div>
+      </div>
+
+      {/* Quick Actions */}
+      <div className="border-t border-white/10 pt-4">
+        <h4 className="text-sm font-medium text-white/80 mb-3">Quick Actions</h4>
+        <div className="flex space-x-2">
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={handleRandomize}
+            className="flex-1 p-3 rounded-lg bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-white/10 hover:border-purple-400 text-white flex items-center justify-center space-x-2 transition-all"
+          >
+            <Shuffle className="w-4 h-4" />
+            <span className="text-sm">Randomize</span>
+          </motion.button>
         </div>
       </div>
     </div>
