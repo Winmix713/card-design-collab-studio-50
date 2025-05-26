@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useCardAttributes } from './hooks/useCardAttributes';
@@ -14,10 +15,15 @@ const ModernCardEditor = () => {
     cardAttributes, 
     updateAttribute, 
     updateShadow,
+    applyPreset,
+    resetToDefault,
     undo,
     redo,
+    clearHistory,
     canUndo,
-    canRedo
+    canRedo,
+    historySize,
+    lastAction
   } = useCardAttributes();
   const [activePanel, setActivePanel] = useState('style');
   const [showMixer, setShowMixer] = useState(false);
@@ -34,6 +40,9 @@ const ModernCardEditor = () => {
         redo={redo}
         canUndo={canUndo}
         canRedo={canRedo}
+        clearHistory={clearHistory}
+        historySize={historySize}
+        lastAction={lastAction}
       />
 
       <ActionButtons
