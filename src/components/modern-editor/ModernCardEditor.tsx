@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useCardAttributes } from './hooks/useCardAttributes';
@@ -11,7 +10,15 @@ import { LiveStyleMixer } from './LiveStyleMixer';
 import { ExportHub } from './ExportHub';
 
 const ModernCardEditor = () => {
-  const { cardAttributes, updateAttribute, updateShadow } = useCardAttributes();
+  const { 
+    cardAttributes, 
+    updateAttribute, 
+    updateShadow,
+    undo,
+    redo,
+    canUndo,
+    canRedo
+  } = useCardAttributes();
   const [activePanel, setActivePanel] = useState('style');
   const [showMixer, setShowMixer] = useState(false);
   const [showExport, setShowExport] = useState(false);
@@ -23,6 +30,10 @@ const ModernCardEditor = () => {
       <FloatingPanelButtons
         activePanel={activePanel}
         setActivePanel={setActivePanel}
+        undo={undo}
+        redo={redo}
+        canUndo={canUndo}
+        canRedo={canRedo}
       />
 
       <ActionButtons

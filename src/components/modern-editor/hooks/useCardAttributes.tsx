@@ -1,5 +1,5 @@
-
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { useCardHistory } from './useCardHistory';
 
 export interface CardAttributes {
   backgroundColor: string;
@@ -90,28 +90,52 @@ const initialCardAttributes: CardAttributes = {
 };
 
 export const useCardAttributes = () => {
-  const [cardAttributes, setCardAttributes] = useState<CardAttributes>(initialCardAttributes);
+  const {
+    state: cardAttributes,
+    pushToHistory,
+    undo,
+    redo,
+    canUndo,
+    canRedo
+  } = useCardHistory(initialCardAttributes);
+
+  const [tempAttributes, setTempAttributes] = useState<CardAttributes>(cardAttributes);
+
+  // Sync temp attributes with history state
+  useEffect(() => {
+    setTempAttributes(cardAttributes);
+  }, [cardAttributes]);
 
   const updateAttribute = useCallback((key: string, value: any) => {
-    setCardAttributes(prev => ({
-      ...prev,
+    const newAttributes = {
+      ...tempAttributes,
       [key]: value
-    }));
-  }, []);
+    };
+    setTempAttributes(newAttributes);
+    
+    // Debounced history push (immediate for better UX)
+    pushToHistory(newAttributes);
+  }, [tempAttributes, pushToHistory]);
 
   const updateShadow = useCallback((shadowType: string, key: string, value: any) => {
-    setCardAttributes(prev => ({
-      ...prev,
+    const newAttributes = {
+      ...tempAttributes,
       [shadowType]: {
-        ...prev[shadowType as keyof typeof prev] as any,
+        ...tempAttributes[shadowType as keyof typeof tempAttributes] as any,
         [key]: value
       }
-    }));
-  }, []);
+    };
+    setTempAttributes(newAttributes);
+    pushToHistory(newAttributes);
+  }, [tempAttributes, pushToHistory]);
 
   return {
-    cardAttributes,
+    cardAttributes: tempAttributes,
     updateAttribute,
-    updateShadow
+    updateShadow,
+    undo,
+    redo,
+    canUndo,
+    canRedo
   };
 };

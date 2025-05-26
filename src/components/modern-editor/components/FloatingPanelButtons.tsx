@@ -1,16 +1,23 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Settings, Palette, Layers, Box } from 'lucide-react';
+import { Settings, Palette, Layers, Box, Undo, Redo } from 'lucide-react';
 
 interface FloatingPanelButtonsProps {
   activePanel: string;
   setActivePanel: (panel: string) => void;
+  undo?: () => void;
+  redo?: () => void;
+  canUndo?: boolean;
+  canRedo?: boolean;
 }
 
 export const FloatingPanelButtons: React.FC<FloatingPanelButtonsProps> = ({
   activePanel,
-  setActivePanel
+  setActivePanel,
+  undo,
+  redo,
+  canUndo = false,
+  canRedo = false
 }) => {
   const floatingPanels = [
     { id: 'style', icon: Palette, label: 'Style', position: { top: '10%', left: '2%' } },
@@ -19,8 +26,64 @@ export const FloatingPanelButtons: React.FC<FloatingPanelButtonsProps> = ({
     { id: 'presets', icon: Settings, label: 'Presets', position: { top: '70%', left: '2%' } }
   ];
 
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
+        e.preventDefault();
+        if (canUndo && undo) undo();
+      } else if (((e.ctrlKey || e.metaKey) && e.key === 'y') || 
+                 ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'Z')) {
+        e.preventDefault();
+        if (canRedo && redo) redo();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [undo, redo, canUndo, canRedo]);
+
   return (
     <>
+      {/* Undo/Redo buttons */}
+      <motion.div
+        className="fixed z-20"
+        style={{ top: '2%', left: '2%' }}
+        whileHover={{ scale: 1.05 }}
+      >
+        <div className="flex space-x-2">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={undo}
+            disabled={!canUndo}
+            className={`p-3 rounded-xl backdrop-blur-md transition-all duration-300 ${
+              canUndo
+                ? 'bg-white/10 border border-white/20 hover:bg-white/15 text-white'
+                : 'bg-white/5 border border-white/10 text-white/30 cursor-not-allowed'
+            }`}
+            title="Undo (Ctrl+Z)"
+          >
+            <Undo className="w-5 h-5" />
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={redo}
+            disabled={!canRedo}
+            className={`p-3 rounded-xl backdrop-blur-md transition-all duration-300 ${
+              canRedo
+                ? 'bg-white/10 border border-white/20 hover:bg-white/15 text-white'
+                : 'bg-white/5 border border-white/10 text-white/30 cursor-not-allowed'
+            }`}
+            title="Redo (Ctrl+Y)"
+          >
+            <Redo className="w-5 h-5" />
+          </motion.button>
+        </div>
+      </motion.div>
+
+      {/* Existing panel buttons */}
       {floatingPanels.map((panel) => (
         <motion.div
           key={panel.id}
