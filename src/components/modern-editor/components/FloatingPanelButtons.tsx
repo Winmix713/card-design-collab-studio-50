@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { TooltipProvider } from '../../ui/tooltip';
@@ -52,7 +51,9 @@ export const FloatingPanelButtons: React.FC<FloatingPanelButtonsProps> = ({
       <motion.div
         className="fixed z-20"
         style={{ top: '2%', left: '2%' }}
-        whileHover={{ scale: 1.02 }}
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
       >
         <HistoryButtons
           undo={undo}
@@ -69,7 +70,9 @@ export const FloatingPanelButtons: React.FC<FloatingPanelButtonsProps> = ({
       <motion.div
         className="fixed z-20"
         style={{ top: '2%', right: '2%' }}
-        whileHover={{ scale: 1.02 }}
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.1 }}
       >
         <QuickActionButtons
           onTemplateGallery={onTemplateGallery}
@@ -82,7 +85,9 @@ export const FloatingPanelButtons: React.FC<FloatingPanelButtonsProps> = ({
       <motion.div
         className="fixed z-20 left-1/2 transform -translate-x-1/2"
         style={{ top: '2%' }}
-        whileHover={{ scale: 1.02 }}
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.2 }}
       >
         <PanelButtons activePanel={activePanel} setActivePanel={setActivePanel} />
       </motion.div>
