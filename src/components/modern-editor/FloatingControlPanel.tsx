@@ -1,12 +1,14 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { X, Palette, Layers, Box, Settings } from 'lucide-react';
+import { X, Palette, Layers, Box, Settings, Type, Sparkles } from 'lucide-react';
 import { CardAttributes } from './hooks/useCardAttributes';
 import { VisualGradientBuilder } from './VisualGradientBuilder';
 import { Shadow3DController } from './Shadow3DController';
 import { SmartPresetGallery } from './SmartPresetGallery';
 import { StyleControls } from './StyleControls';
+import { TypographyControls } from './TypographyControls';
+import { AdvancedEffects } from './AdvancedEffects';
 
 interface FloatingControlPanelProps {
   activePanel: string;
@@ -71,6 +73,16 @@ export const FloatingControlPanel: React.FC<FloatingControlPanelProps> = ({
         title: 'Smart Presets',
         icon: Settings,
         gradient: 'from-purple-500 to-indigo-600'
+      },
+      typography: {
+        title: 'Typography',
+        icon: Type,
+        gradient: 'from-emerald-500 to-cyan-600'
+      },
+      effects: {
+        title: 'Advanced Effects',
+        icon: Sparkles,
+        gradient: 'from-rose-500 to-pink-600'
       }
     };
     return configs[activePanel as keyof typeof configs] || configs.style;
@@ -102,6 +114,20 @@ export const FloatingControlPanel: React.FC<FloatingControlPanelProps> = ({
       case 'presets':
         return (
           <SmartPresetGallery
+            cardAttributes={cardAttributes}
+            updateAttribute={updateAttribute}
+          />
+        );
+      case 'typography':
+        return (
+          <TypographyControls
+            cardAttributes={cardAttributes}
+            updateAttribute={updateAttribute}
+          />
+        );
+      case 'effects':
+        return (
+          <AdvancedEffects
             cardAttributes={cardAttributes}
             updateAttribute={updateAttribute}
           />

@@ -8,9 +8,9 @@ import { ActionButtons } from './components/ActionButtons';
 import { CardPreview } from './components/CardPreview';
 import { FloatingControlPanel } from './FloatingControlPanel';
 import { LiveStyleMixer } from './LiveStyleMixer';
-import { ExportHub } from './ExportHub';
+import { EnhancedExportHub } from './EnhancedExportHub';
 import { TemplateGallery } from './TemplateGallery';
-import { generateRandomCard, exportCard } from './utils/cardUtils';
+import { generateRandomCard } from './utils/cardUtils';
 
 const ModernCardEditor = () => {
   const { 
@@ -53,7 +53,7 @@ const ModernCardEditor = () => {
             break;
           case 's':
             e.preventDefault();
-            exportCard(cardAttributes, cardStyle);
+            setShowExport(true);
             break;
           case 't':
             e.preventDefault();
@@ -69,7 +69,7 @@ const ModernCardEditor = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [undo, redo, cardAttributes, cardStyle]);
+  }, [undo, redo]);
 
   const handleRandomize = useCallback(() => {
     const randomData = generateRandomCard();
@@ -96,10 +96,6 @@ const ModernCardEditor = () => {
     });
   }, [updateAttribute, updateShadow]);
 
-  const handleExport = useCallback(() => {
-    exportCard(cardAttributes, cardStyle);
-  }, [cardAttributes, cardStyle]);
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
       <AnimatedBackground />
@@ -116,7 +112,7 @@ const ModernCardEditor = () => {
         lastAction={lastAction}
         onTemplateGallery={() => setShowTemplateGallery(true)}
         onRandomize={handleRandomize}
-        onExport={handleExport}
+        onExport={() => setShowExport(true)}
       />
 
       <ActionButtons
@@ -155,7 +151,7 @@ const ModernCardEditor = () => {
 
       <AnimatePresence>
         {showExport && (
-          <ExportHub
+          <EnhancedExportHub
             cardAttributes={cardAttributes}
             onClose={() => setShowExport(false)}
           />

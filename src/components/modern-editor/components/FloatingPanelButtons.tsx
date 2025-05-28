@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Settings, Palette, Layers, Box, Undo, Redo, RotateCcw, Grid, Shuffle, Download } from 'lucide-react';
+import { Settings, Palette, Layers, Box, Undo, Redo, RotateCcw, Grid, Shuffle, Download, Type, Sparkles } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../ui/tooltip';
 
 interface FloatingPanelButtonsProps {
@@ -35,9 +35,11 @@ export const FloatingPanelButtons: React.FC<FloatingPanelButtonsProps> = ({
 }) => {
   const floatingPanels = [
     { id: 'style', icon: Palette, label: 'Style', position: { top: '10%', left: '2%' } },
-    { id: 'gradient', icon: Layers, label: 'Gradient', position: { top: '25%', left: '2%' } },
-    { id: 'shadow', icon: Box, label: '3D Shadow', position: { top: '40%', left: '2%' } },
-    { id: 'presets', icon: Settings, label: 'Presets', position: { top: '55%', left: '2%' } }
+    { id: 'gradient', icon: Layers, label: 'Gradient', position: { top: '22%', left: '2%' } },
+    { id: 'shadow', icon: Box, label: '3D Shadow', position: { top: '34%', left: '2%' } },
+    { id: 'typography', icon: Type, label: 'Typography', position: { top: '46%', left: '2%' } },
+    { id: 'effects', icon: Sparkles, label: 'Effects', position: { top: '58%', left: '2%' } },
+    { id: 'presets', icon: Settings, label: 'Presets', position: { top: '70%', left: '2%' } }
   ];
 
   const quickActions = [

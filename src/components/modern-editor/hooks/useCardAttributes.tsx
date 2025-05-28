@@ -1,3 +1,4 @@
+
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import { useCardHistory } from './useCardHistory';
 import { useDebounce } from '../../../hooks/useDebounce';
@@ -44,6 +45,23 @@ export interface CardAttributes {
   padding: number;
   textColor: string;
   globalOpacity: number;
+  // Enhanced Typography
+  titleFont?: string;
+  titleSize?: number;
+  titleWeight?: string;
+  titleAlign?: string;
+  descriptionFont?: string;
+  descriptionSize?: number;
+  descriptionWeight?: string;
+  descriptionAlign?: string;
+  // Advanced Effects
+  rotation?: number;
+  scaleX?: number;
+  scaleY?: number;
+  blur?: number;
+  brightness?: number;
+  contrast?: number;
+  saturation?: number;
 }
 
 const initialCardAttributes: CardAttributes = {
@@ -87,7 +105,24 @@ const initialCardAttributes: CardAttributes = {
   height: 200,
   padding: 24,
   textColor: '#ffffff',
-  globalOpacity: 100
+  globalOpacity: 100,
+  // Enhanced Typography
+  titleFont: 'Inter',
+  titleSize: 18,
+  titleWeight: '600',
+  titleAlign: 'left',
+  descriptionFont: 'Inter',
+  descriptionSize: 14,
+  descriptionWeight: '400',
+  descriptionAlign: 'left',
+  // Advanced Effects
+  rotation: 0,
+  scaleX: 1,
+  scaleY: 1,
+  blur: 0,
+  brightness: 100,
+  contrast: 100,
+  saturation: 100,
 };
 
 export const useCardAttributes = () => {
@@ -151,8 +186,11 @@ export const useCardAttributes = () => {
     batchUpdate(initialCardAttributes, 'reset_to_default');
   }, [batchUpdate]);
 
-  // Memoized derived values for performance
+  // Enhanced memoized derived values for performance with new features
   const cardStyle = useMemo(() => {
+    const transform = `rotate(${tempAttributes.rotation || 0}deg) scaleX(${tempAttributes.scaleX || 1}) scaleY(${tempAttributes.scaleY || 1})`;
+    const filter = `blur(${tempAttributes.blur || 0}px) brightness(${tempAttributes.brightness || 100}%) contrast(${tempAttributes.contrast || 100}%) saturate(${tempAttributes.saturation || 100}%)`;
+    
     return {
       width: `${tempAttributes.width}px`,
       height: `${tempAttributes.height}px`,
@@ -162,6 +200,9 @@ export const useCardAttributes = () => {
       borderRadius: tempAttributes.borderRadiusLinked 
         ? `${tempAttributes.borderRadius}px`
         : `${tempAttributes.borderRadiusTopLeft}px ${tempAttributes.borderRadiusTopRight}px ${tempAttributes.borderRadiusBottomRight}px ${tempAttributes.borderRadiusBottomLeft}px`,
+      transform,
+      filter,
+      fontFamily: `'${tempAttributes.titleFont || 'Inter'}', sans-serif`,
       // Add other style calculations here
     };
   }, [tempAttributes]);
