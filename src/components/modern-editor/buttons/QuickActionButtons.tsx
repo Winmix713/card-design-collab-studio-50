@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Palette, Layers2, Wand2, FileImage } from 'lucide-react';
+import { Grid, Shuffle, Download } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../ui/tooltip';
 import { FloatingButton } from './FloatingButton';
 
@@ -8,48 +8,17 @@ interface QuickActionButtonsProps {
   onTemplateGallery?: () => void;
   onRandomize?: () => void;
   onExport?: () => void;
-  onColorPicker?: () => void;
 }
 
 export const QuickActionButtons: React.FC<QuickActionButtonsProps> = ({
   onTemplateGallery,
   onRandomize,
-  onExport,
-  onColorPicker
+  onExport
 }) => {
   const actions = [
-    { 
-      id: 'colorPicker', 
-      icon: Palette, 
-      label: 'Color Picker', 
-      action: onColorPicker || (() => {}), 
-      shortcut: 'Ctrl+P',
-      className: 'bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-white/20 hover:from-pink-500/30 hover:to-purple-500/30'
-    },
-    { 
-      id: 'templates', 
-      icon: Layers2, 
-      label: 'Templates', 
-      action: onTemplateGallery || (() => {}), 
-      shortcut: 'Ctrl+T',
-      className: 'bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-white/20 hover:from-blue-500/30 hover:to-cyan-500/30'
-    },
-    { 
-      id: 'randomize', 
-      icon: Wand2, 
-      label: 'Randomize', 
-      action: onRandomize || (() => {}), 
-      shortcut: 'Ctrl+R',
-      className: 'bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-white/20 hover:from-green-500/30 hover:to-emerald-500/30'
-    },
-    { 
-      id: 'export', 
-      icon: FileImage, 
-      label: 'Export', 
-      action: onExport || (() => {}), 
-      shortcut: 'Ctrl+S',
-      className: 'bg-gradient-to-r from-orange-500/20 to-red-500/20 border border-white/20 hover:from-orange-500/30 hover:to-red-500/30'
-    }
+    { id: 'templates', icon: Grid, label: 'Templates', action: onTemplateGallery, shortcut: 'Ctrl+T' },
+    { id: 'randomize', icon: Shuffle, label: 'Randomize', action: onRandomize, shortcut: 'Ctrl+R' },
+    { id: 'export', icon: Download, label: 'Export', action: onExport, shortcut: 'Ctrl+S' }
   ];
 
   return (
@@ -59,8 +28,8 @@ export const QuickActionButtons: React.FC<QuickActionButtonsProps> = ({
           <TooltipTrigger asChild>
             <FloatingButton
               icon={action.icon}
-              onClick={action.action}
-              className={action.className}
+              onClick={action.action || (() => {})}
+              className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-white/20 hover:from-purple-500/30 hover:to-pink-500/30"
             />
           </TooltipTrigger>
           <TooltipContent>
