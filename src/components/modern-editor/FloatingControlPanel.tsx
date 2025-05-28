@@ -24,14 +24,12 @@ export const FloatingControlPanel: React.FC<FloatingControlPanelProps> = ({
   const panelVariants = {
     hidden: { 
       opacity: 0, 
-      scale: 0.8, 
-      y: 50,
+      x: -300,
       filter: 'blur(10px)'
     },
     visible: { 
       opacity: 1, 
-      scale: 1, 
-      y: 0,
+      x: 0,
       filter: 'blur(0px)',
       transition: { 
         type: "spring", 
@@ -41,8 +39,7 @@ export const FloatingControlPanel: React.FC<FloatingControlPanelProps> = ({
     },
     exit: { 
       opacity: 0, 
-      scale: 0.8, 
-      y: 50,
+      x: -300,
       filter: 'blur(10px)',
       transition: { duration: 0.2 }
     }
@@ -69,23 +66,19 @@ export const FloatingControlPanel: React.FC<FloatingControlPanelProps> = ({
 
   return (
     <motion.div
-      className="fixed inset-0 z-30 flex items-center justify-center p-4"
-      initial={{ backgroundColor: 'rgba(0,0,0,0)' }}
-      animate={{ backgroundColor: 'rgba(0,0,0,0.6)' }}
-      exit={{ backgroundColor: 'rgba(0,0,0,0)' }}
-      onClick={onClose}
+      className="fixed left-4 top-1/2 transform -translate-y-1/2 z-30 w-80"
+      variants={panelVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
     >
       <motion.div
-        className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl overflow-hidden max-w-lg w-full max-h-[85vh] shadow-2xl"
-        variants={panelVariants}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
+        className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl overflow-hidden shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <PanelHeader panelType={activePanel as PanelType} onClose={onClose} />
         
-        <div className="p-6 overflow-y-auto max-h-[calc(85vh-140px)]" style={{
+        <div className="p-6 max-h-[70vh] overflow-y-auto" style={{
           scrollbarWidth: 'thin',
           scrollbarColor: 'rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1)'
         }}>

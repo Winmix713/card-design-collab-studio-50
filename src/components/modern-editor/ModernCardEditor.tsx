@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useCardAttributes } from './hooks/useCardAttributes';
@@ -33,6 +32,8 @@ const ModernCardEditor = () => {
   const [showMixer, setShowMixer] = useState(false);
   const [showExport, setShowExport] = useState(false);
   const [showTemplateGallery, setShowTemplateGallery] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -96,6 +97,16 @@ const ModernCardEditor = () => {
     });
   }, [updateAttribute, updateShadow]);
 
+  const handleSave = useCallback(() => {
+    // Implement save functionality
+    console.log('Saving project...');
+  }, []);
+
+  const handleShare = useCallback(() => {
+    // Implement share functionality
+    console.log('Sharing project...');
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
       <AnimatedBackground />
@@ -116,10 +127,12 @@ const ModernCardEditor = () => {
       />
 
       <ActionButtons
-        showMixer={showMixer}
-        setShowMixer={setShowMixer}
-        showExport={showExport}
-        setShowExport={setShowExport}
+        showPreview={showPreview}
+        setShowPreview={setShowPreview}
+        showSettings={showSettings}
+        setShowSettings={setShowSettings}
+        onSave={handleSave}
+        onShare={handleShare}
       />
 
       <CardPreview

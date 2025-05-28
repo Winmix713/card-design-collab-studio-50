@@ -1,39 +1,77 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Wand2, Download } from 'lucide-react';
+import { Save, Share2, Eye, Settings2 } from 'lucide-react';
 
 interface ActionButtonsProps {
-  showMixer: boolean;
-  setShowMixer: (show: boolean) => void;
-  showExport: boolean;
-  setShowExport: (show: boolean) => void;
+  showPreview: boolean;
+  setShowPreview: (show: boolean) => void;
+  showSettings: boolean;
+  setShowSettings: (show: boolean) => void;
+  onSave?: () => void;
+  onShare?: () => void;
 }
 
 export const ActionButtons: React.FC<ActionButtonsProps> = ({
-  showMixer,
-  setShowMixer,
-  showExport,
-  setShowExport
+  showPreview,
+  setShowPreview,
+  showSettings,
+  setShowSettings,
+  onSave,
+  onShare
 }) => {
+  const buttons = [
+    {
+      id: 'save',
+      icon: Save,
+      label: 'Save Project',
+      action: onSave || (() => {}),
+      gradient: 'from-green-500 to-emerald-500'
+    },
+    {
+      id: 'share',
+      icon: Share2,
+      label: 'Share',
+      action: onShare || (() => {}),
+      gradient: 'from-blue-500 to-cyan-500'
+    },
+    {
+      id: 'preview',
+      icon: Eye,
+      label: 'Preview Mode',
+      action: () => setShowPreview(!showPreview),
+      gradient: 'from-purple-500 to-indigo-500',
+      active: showPreview
+    },
+    {
+      id: 'settings',
+      icon: Settings2,
+      label: 'Project Settings',
+      action: () => setShowSettings(!showSettings),
+      gradient: 'from-orange-500 to-red-500',
+      active: showSettings
+    }
+  ];
+
   return (
-    <div className="fixed top-6 right-6 z-20 flex space-x-3">
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => setShowMixer(!showMixer)}
-        className="p-3 rounded-xl bg-gradient-to-r from-pink-500 to-violet-500 text-white shadow-lg"
-      >
-        <Wand2 className="w-5 h-5" />
-      </motion.button>
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => setShowExport(!showExport)}
-        className="p-3 rounded-xl bg-gradient-to-r from-green-500 to-blue-500 text-white shadow-lg"
-      >
-        <Download className="w-5 h-5" />
-      </motion.button>
+    <div className="fixed top-6 right-6 z-20 flex flex-col space-y-3">
+      {buttons.map((button) => {
+        const Icon = button.icon;
+        return (
+          <motion.button
+            key={button.id}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={button.action}
+            className={`p-3 rounded-xl bg-gradient-to-r ${button.gradient} text-white shadow-lg ${
+              button.active ? 'ring-2 ring-white/50' : ''
+            }`}
+            title={button.label}
+          >
+            <Icon className="w-5 h-5" />
+          </motion.button>
+        );
+      })}
     </div>
   );
 };

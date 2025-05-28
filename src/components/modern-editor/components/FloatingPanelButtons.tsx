@@ -78,8 +78,14 @@ export const FloatingPanelButtons: React.FC<FloatingPanelButtonsProps> = ({
         />
       </motion.div>
 
-      {/* Panel Buttons */}
-      <PanelButtons activePanel={activePanel} setActivePanel={setActivePanel} />
+      {/* Centered Panel Buttons */}
+      <motion.div
+        className="fixed z-20 left-1/2 transform -translate-x-1/2"
+        style={{ top: '2%' }}
+        whileHover={{ scale: 1.02 }}
+      >
+        <PanelButtons activePanel={activePanel} setActivePanel={setActivePanel} />
+      </motion.div>
     </TooltipProvider>
   );
 };
