@@ -1,14 +1,10 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { X, Palette, Layers, Box, Settings, Type, Sparkles } from 'lucide-react';
 import { CardAttributes } from './hooks/useCardAttributes';
-import { VisualGradientBuilder } from './VisualGradientBuilder';
-import { Shadow3DController } from './Shadow3DController';
-import { SmartPresetGallery } from './SmartPresetGallery';
-import { StyleControls } from './StyleControls';
-import { TypographyControls } from './TypographyControls';
-import { AdvancedEffects } from './AdvancedEffects';
+import { PanelHeader } from './panels/PanelHeader';
+import { StylePanel, GradientPanel, ShadowPanel, PresetsPanel, TypographyPanel, EffectsPanel } from './panels';
+import { PanelType } from './panels/PanelConfig';
 
 interface FloatingControlPanelProps {
   activePanel: string;
@@ -52,93 +48,24 @@ export const FloatingControlPanel: React.FC<FloatingControlPanelProps> = ({
     }
   };
 
-  const getPanelConfig = () => {
-    const configs = {
-      style: {
-        title: 'Style Controls',
-        icon: Palette,
-        gradient: 'from-blue-500 to-purple-600'
-      },
-      gradient: {
-        title: 'Gradient Builder',
-        icon: Layers,
-        gradient: 'from-pink-500 to-orange-500'
-      },
-      shadow: {
-        title: '3D Shadow',
-        icon: Box,
-        gradient: 'from-green-500 to-teal-600'
-      },
-      presets: {
-        title: 'Smart Presets',
-        icon: Settings,
-        gradient: 'from-purple-500 to-indigo-600'
-      },
-      typography: {
-        title: 'Typography',
-        icon: Type,
-        gradient: 'from-emerald-500 to-cyan-600'
-      },
-      effects: {
-        title: 'Advanced Effects',
-        icon: Sparkles,
-        gradient: 'from-rose-500 to-pink-600'
-      }
-    };
-    return configs[activePanel as keyof typeof configs] || configs.style;
-  };
-
   const renderPanelContent = () => {
     switch (activePanel) {
       case 'style':
-        return (
-          <StyleControls
-            cardAttributes={cardAttributes}
-            updateAttribute={updateAttribute}
-          />
-        );
+        return <StylePanel cardAttributes={cardAttributes} updateAttribute={updateAttribute} />;
       case 'gradient':
-        return (
-          <VisualGradientBuilder
-            cardAttributes={cardAttributes}
-            updateAttribute={updateAttribute}
-          />
-        );
+        return <GradientPanel cardAttributes={cardAttributes} updateAttribute={updateAttribute} />;
       case 'shadow':
-        return (
-          <Shadow3DController
-            cardAttributes={cardAttributes}
-            updateShadow={updateShadow}
-          />
-        );
+        return <ShadowPanel cardAttributes={cardAttributes} updateShadow={updateShadow} />;
       case 'presets':
-        return (
-          <SmartPresetGallery
-            cardAttributes={cardAttributes}
-            updateAttribute={updateAttribute}
-          />
-        );
+        return <PresetsPanel cardAttributes={cardAttributes} updateAttribute={updateAttribute} />;
       case 'typography':
-        return (
-          <TypographyControls
-            cardAttributes={cardAttributes}
-            updateAttribute={updateAttribute}
-          />
-        );
+        return <TypographyPanel cardAttributes={cardAttributes} updateAttribute={updateAttribute} />;
       case 'effects':
-        return (
-          <AdvancedEffects
-            cardAttributes={cardAttributes}
-            updateAttribute={updateAttribute}
-          />
-        );
+        return <EffectsPanel cardAttributes={cardAttributes} updateAttribute={updateAttribute} />;
       default:
         return null;
     }
   };
-
-  const config = getPanelConfig();
-  const IconComponent = config.icon;
 
   return (
     <motion.div
@@ -156,39 +83,8 @@ export const FloatingControlPanel: React.FC<FloatingControlPanelProps> = ({
         exit="exit"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Enhanced Header with Gradient */}
-        <div className={`bg-gradient-to-r ${config.gradient} p-6 relative overflow-hidden`}>
-          <div className="absolute inset-0 bg-black/20" />
-          <div className="relative flex justify-between items-center">
-            <div className="flex items-center space-x-4">
-              <div className="p-3 bg-white/20 rounded-2xl backdrop-blur-sm">
-                <IconComponent className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h2 className="text-xl font-bold text-white">
-                  {config.title}
-                </h2>
-                <p className="text-white/80 text-sm">
-                  Customize your card design
-                </p>
-              </div>
-            </div>
-            <motion.button
-              whileHover={{ scale: 1.1, rotate: 90 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={onClose}
-              className="p-3 rounded-2xl bg-white/10 hover:bg-white/20 transition-all duration-200 backdrop-blur-sm"
-            >
-              <X className="w-5 h-5 text-white" />
-            </motion.button>
-          </div>
-          
-          {/* Decorative Elements */}
-          <div className="absolute -top-4 -right-4 w-24 h-24 bg-white/10 rounded-full blur-xl" />
-          <div className="absolute -bottom-2 -left-2 w-16 h-16 bg-white/5 rounded-full blur-lg" />
-        </div>
+        <PanelHeader panelType={activePanel as PanelType} onClose={onClose} />
         
-        {/* Content Area with Better Spacing */}
         <div className="p-6 overflow-y-auto max-h-[calc(85vh-140px)]" style={{
           scrollbarWidth: 'thin',
           scrollbarColor: 'rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1)'
@@ -203,7 +99,6 @@ export const FloatingControlPanel: React.FC<FloatingControlPanelProps> = ({
           </motion.div>
         </div>
 
-        {/* Bottom Gradient Fade */}
         <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
       </motion.div>
 
